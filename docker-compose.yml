@@ -10,7 +10,23 @@ services:
       - CHOKIDAR_USEPOLLING=true
     env_file:
       - .env
-    command: sh -c "npm install nodemon -g && nodemon src/app.js"
+    command: sh -c "npm run dev"
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - mongo
+    ports:
+      - 5000:3000
+
+  test:
+    build: .
+    environment: 
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASS=${MONGO_PASS}
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - .env
+    command: sh -c "npm run test"
     volumes:
       - ./src:/app/src
     depends_on:
