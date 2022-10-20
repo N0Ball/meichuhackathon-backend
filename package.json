@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./src/tests/*.spec.js --exit"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,12 @@
     "mongoose": "^6.6.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.20",
+    "rewire": "^6.0.0",
+    "sinon": "^14.0.0",
+    "sinon-chai": "^3.7.0"
+
   }
 }
