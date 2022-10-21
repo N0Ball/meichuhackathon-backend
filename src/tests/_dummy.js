@@ -56,12 +56,12 @@ exports.departmentRelations = [
         role: "employee"
     },
     {
-        uid: "E2593829",
+        uid: "E096096",
         did: "D01",
         role: "employee"
     },
     {
-        uid: "E096096",
+        uid: "E285392",
         did: "D02",
         role: "employee"
     }
