@@ -16,6 +16,11 @@ app.listen(PORT, (error) =>{
 const connectDB = require("./db/connection");
 connectDB();
 
+if (process.env.ENV == 'DEV'){
+    const initDB = require("./db/init");
+    initDB();
+}
+
 // Middlewares
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -30,7 +35,8 @@ const corsOption = {
 app.use(cors(corsOption));
 
 // Routings
-app.use("/health", require("./routes/health.route"));
+app.use("/api/v1/health", require("./routes/health.route"));
+app.use("/api/v1/event", require("./routes/event.route"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
