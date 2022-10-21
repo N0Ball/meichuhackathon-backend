@@ -10,12 +10,34 @@ This is a user management system for the service, you can
 4. Find all departments -> `GET /api/v1/department`
 5. Check health -> `GET /api/v1/health/async`, `GET /api/v1/health/sync`
 
-# Test
+
+# Installation
+
+```shell
+cp .env.sample .env
+cp .env.sample .env.test
+```
+
+## .env / .env.test
+
+```txt
+MONGO_USER= # Only for prod
+MONGO_PASS= # Only for prod
+MONGO_HOST=mongo # Mongo Host URL/IP
+MONGO_PORT=27017 # Mongo Port
+MONGO_DB=user-management # Mongo DB
+CLIENT=localhost # For CORS Policy
+ENV=DEV # .env should be PROD and .env.test should be TEST
+```
+
+## test the build
 
 ```shell
 docker compose up test
 ```
 
+If everything is ok, than you are free to go!
+`
 # Dev
 
 ```shell
