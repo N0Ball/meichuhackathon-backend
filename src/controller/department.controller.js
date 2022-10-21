@@ -1,9 +1,20 @@
 const DepartmentCRUD = require("../crud/department.crud");
+const DepartmentRelationsCRUD = require("../crud/departmentRelations.crud");
+const UserCRUD = require("../crud/user.crud");
+const {
+    UserInfoField
+} = require("./user.controller");
 
-exports.departmentInfoField = (department) => {
+const _departmentInfoField = (department) => {
     return {
         did: department.did,
         name: department.name       
+    }
+}
+
+exports.departmentInfoField = (department) => {
+    return {
+        name: department.name
     }
 }
 
@@ -13,7 +24,7 @@ exports.getDepartments = async (req, res) => {
 
     res.result = []
     departments.forEach(e => {
-        res.result.push(this.departmentInfoField(e));
+        res.result.push(_departmentInfoField(e));
     });
 
     res.status(200).json({
@@ -32,7 +43,30 @@ exports.getDepartment = async (req, res) => {
         });
     }
 
-    res.result = this.departmentInfoField(department);
+    res.result = _departmentInfoField(department);
+
+    const relations = await DepartmentRelationsCRUD.getRelationByDid(res.result.did);
+
+    res.result.admins = []
+    res.result.employees = [];
+
+    for await (const relation of relations){
+        let user = await UserCRUD.getUserByUid(relation.uid);
+
+        if (user === null){
+            console.log(`LOG:\tdetected relations with invalid user ${relation.uid} with relation id ${relation._id}`);
+            continue;
+        }
+
+        user = UserInfoField(user);
+        
+        if (relation.role == 'head'){
+            res.result.admins.push(user);
+            continue;
+        }
+        
+        res.result.employees.push(user);
+    }
 
     return res.status(200).json({
         detail: res.result

@@ -1,6 +1,7 @@
 const UserCRUD = require("../crud/user.crud");
+const DepartmentRelationsCRUD = require("../crud/departmentRelations.crud");
 
-const userInfoField = (user) => {
+const _userInfoField = (user) => {
 
     return {
             uid: user.uid,
@@ -9,6 +10,13 @@ const userInfoField = (user) => {
             RFID_id: user.RFID_id,
     };
 
+}
+
+exports.UserInfoField = (user) => {
+    return {
+        uid: user.uid,
+        name: user.name
+    }
 }
 
 exports.getUser = async (req, res, next) => {
@@ -29,7 +37,13 @@ exports.getUser = async (req, res, next) => {
         })
     }
 
-    res.result = userInfoField(user);
+    res.result = _userInfoField(user);
+
+    res.result.departments = [];
+    const relations = await DepartmentRelationsCRUD.getRelationByUid(user.uid);
+    for await (const relation of relations){
+        res.result.departments.push(relation.did);
+    }
     
     return res.status(200).json({
         detail: res.result
