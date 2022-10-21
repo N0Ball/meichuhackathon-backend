@@ -36,7 +36,6 @@ describe('Test /user', () => {
 
     describe('Test get user info with uid', () => {
 
-
         users.forEach( (user) => {
             it(`should return a valid user with uid ${user.uid}`, async () => {
                 const result = await getUserByUid(user.uid);
@@ -52,7 +51,6 @@ describe('Test /user', () => {
     });
 
     describe('Test get user info with rfid', () => {
-
 
         users.forEach( (user) => {
             it(`should return a valid user with rfid ${user.RFID_id}`, async () => {
