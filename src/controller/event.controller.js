@@ -63,3 +63,19 @@ exports.getEventByid = async(req, res) => {
     });
 
 }
+
+exports.createEvent = async(req, res) => {
+
+    if ((!req.body.uid || !req.body.result) || !req.body.time){
+        return res.status(400).json({
+            detail: "Should include uid, result, time field"
+        });
+    }
+
+    const event = await EventCRUD.createEvent({...req.body, url: 'https://img.dummy.com'});
+    
+    return res.status(200).json({
+        detail: _eventInfoField(event)
+    });
+
+}
