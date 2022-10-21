@@ -12,7 +12,7 @@ const {
     users,
     departments,
     departmentRelations
-} = require("./dummy");
+} = require("./_dummy");
 
 global.mockRequest = (data) => {
     return data

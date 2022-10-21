@@ -1,5 +1,4 @@
 const chai = require('chai');
-const mongoose = require('mongoose');
 const sinon = require('sinon');
 const expect = chai.expect;
 
@@ -7,47 +6,11 @@ const {
     getUser
 } = require("../controller/user.controller");
 
-const connectDB = require('../db/connection');
-const UserDB = require("../model/user.model");
-const DepartmentDB = require("../model/department.model");
-const departmentRelationsDB = require("../model/departmentRelation.model");
-
 const {
-    users,
-    departments,
-    departmentRelations
-} = require("./dummy");
+    users
+} = require("./_dummy");
 
 describe('Test /user', () => {
-
-    const mockRequest = (data) => {
-        return data
-    }
-    const mockResponse = () => {
-        const res = {};
-        res.result = sinon.stub().returns(res);
-        res.status = sinon.stub().returns(res);
-        res.json = sinon.stub().returns(res);
-        return res;
-    }
-    const mockNext = () => {
-        const next = sinon.stub();
-        return next;
-    }
-
-    before( async () => {
-        await connectDB();
-        await UserDB.deleteMany({});
-        await DepartmentDB.deleteMany({});
-        await departmentRelationsDB.deleteMany({});
-        await UserDB.insertMany(users);
-        await DepartmentDB.insertMany(departments);
-        await departmentRelationsDB.insertMany(departmentRelations);
-    });
-
-    after( () => {
-        mongoose.disconnect();
-    });
 
     describe('Test get user info with uid', () => {
 

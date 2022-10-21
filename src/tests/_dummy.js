@@ -31,6 +31,10 @@ exports.departments = [
         did: "D02",
         name: "RD",
     },
+    {
+        did: "D03",
+        name: "PM"
+    }
 ]
 
 exports.departmentRelations = [
