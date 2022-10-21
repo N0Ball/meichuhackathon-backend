@@ -6,16 +6,16 @@ const {
     healthCheckAsync
 } = require('../controller/health.controller');
 
-describe('Test /health', () => {
+describe('Test health functional', () => {
 
-    describe('Health check on /sync', () => {
+    describe('sync', () => {
         it('health should be okay', () => {
             const actualResult = healthCheckSync();
             expect(actualResult).to.equal('OK');
         });
     });
 
-    describe('Health check on /async', () => {
+    describe('async', () => {
         it('health should be okay', async () => {
             const actualResult = await healthCheckAsync();
             expect(actualResult).to.equal('OK');
