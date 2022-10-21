@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const expect = chai.expect;
 
 const {
-    getDepartments
+    getDepartments, getDepartment
 } = require("../controller/department.controller");
 const { departments } = require('./_dummy');
 
@@ -48,7 +48,6 @@ describe('Test /department', () => {
 
             sinon.assert.calledWith(res.status, 200);
             sinon.assert.calledOnce(res.json);
-            console.log(res.result, departments[1]);
             expect(res.result).to.not.deep.includes(departments[0]);
             expect(res.result).to.deep.includes(departments[1]);
             expect(res.result).to.deep.includes(departments[2]);
@@ -80,6 +79,43 @@ describe('Test /department', () => {
             sinon.assert.calledWith(res.status, 200);
             sinon.assert.calledOnce(res.json);
             expect(res.result).to.eql([]);
+        });
+
+    });
+
+    describe("Get Certain Department Info", () => {
+
+        departments.forEach( department => {
+
+            it(`Should return a valid department with did ${department.did}`, async () => {
+                const req = mockRequest({params: {
+                    did: department.did
+                }});
+                const res = mockResponse();
+
+                await getDepartment(req, res);
+
+                sinon.assert.calledWith(res.status, 200);
+                sinon.assert.calledOnce(res.json);
+
+                expect(res.result.did).equals(department.did);
+            });
+
+        });
+
+        it('Should return null if given an invalid did', async () => {
+            const req = mockRequest({params: {
+                did: "DEAD_D1D"
+            }});
+            const res = mockResponse();
+
+            await getDepartment(req, res);
+
+            sinon.assert.calledWith(res.status, 404);
+            sinon.assert.calledOnce(res.json);
+            sinon.assert.calledWith(res.json, {
+                detail: "Department not found"
+            });
         });
 
     });
