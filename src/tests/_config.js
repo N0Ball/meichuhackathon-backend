@@ -1,17 +1,8 @@
 const mongoose = require('mongoose');
 const sinon = require('sinon');
 
-const connectDB = require('../db/connection');
-const UserDB = require("../model/user.model");
-const DepartmentDB = require("../model/department.model");
-const departmentRelationsDB = require("../model/departmentRelation.model");
-
-
-const {
-    users,
-    departments,
-    departmentRelations
-} = require("./_dummy");
+const connectDB = require("../db/connection");
+const initDB = require("../db/init");
 
 global.mockRequest = (data) => {
     return data
@@ -28,16 +19,11 @@ global.mockNext = () => {
     return next;
 }
 
-beforeEach( async () => {
+before( async () => {
     await connectDB();
-    await UserDB.deleteMany({});
-    await DepartmentDB.deleteMany({});
-    await departmentRelationsDB.deleteMany({});
-    await UserDB.insertMany(users);
-    await DepartmentDB.insertMany(departments);
-    await departmentRelationsDB.insertMany(departmentRelations);
+    await initDB();
 });
 
-afterEach( () => {
+after( () => {
     mongoose.disconnect();
 });

@@ -16,6 +16,11 @@ app.listen(PORT, (error) =>{
 const connectDB = require("./db/connection");
 connectDB();
 
+if (process.env.ENV == 'DEV'){
+    const initDB = require("./db/init");
+    initDB();
+}
+
 // Middlewares
 const cors = require("cors");
 const bodyParser = require("body-parser");
