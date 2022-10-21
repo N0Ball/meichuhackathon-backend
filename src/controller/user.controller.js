@@ -1,5 +1,16 @@
 const UserCRUD = require("../crud/user.crud");
 
+const userInfoField = (user) => {
+
+    return {
+            uid: user.uid,
+            name: user.name,
+            email: user.email,
+            RFID_id: user.RFID_id,
+    };
+
+}
+
 exports.getUser = async (req, res, next) => {
 
     let user = null;
@@ -18,27 +29,9 @@ exports.getUser = async (req, res, next) => {
         })
     }
 
-    res.result = user;
-    next();
-}
-
-exports.userInfoField = (req, res) => {
-
-    if (!res.result){
-        return res.status(500).json({
-            detail: 'no users to present'
-        });
-    }
-
-    const user = res.result;
-
+    res.result = userInfoField(user);
+    
     return res.status(200).json({
-        detail: {
-            uid: user.uid,
-            name: user.name,
-            email: user.email,
-            RFID_id: user.RFID_id,
-        }
+        detail: res.result
     });
-
 }

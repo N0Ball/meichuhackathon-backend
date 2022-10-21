@@ -23,12 +23,11 @@ describe('Test /user', () => {
                     }
                 });
                 const res = mockResponse();
-                const next = mockNext();
 
-                await getUser(req, res, next);
+                await getUser(req, res);
 
-                sinon.assert.calledOnce(next);
-
+                sinon.assert.calledWith(res.status, 200);
+                sinon.assert.calledOnce(res.json);
                 expect(res.result).includes({uid: user.uid});
 
             });
@@ -42,9 +41,8 @@ describe('Test /user', () => {
                     }
                 });
                 const res = mockResponse();
-                const next = mockNext();
 
-                await getUser(req, res, next);
+                await getUser(req, res);
 
                 sinon.assert.calledWith(res.status, 404);
                 sinon.assert.calledOnce(res.json);
@@ -66,12 +64,11 @@ describe('Test /user', () => {
                     }
                 });
                 const res = mockResponse();
-                const next = mockNext();
 
-                await getUser(req, res, next);
+                await getUser(req, res);
 
-                sinon.assert.calledOnce(next);
-
+                sinon.assert.calledWith(res.status, 200);
+                sinon.assert.calledOnce(res.json);
                 expect(res.result).includes({uid: user.uid});
 
             });
@@ -85,9 +82,8 @@ describe('Test /user', () => {
                     }
                 });
                 const res = mockResponse();
-                const next = mockNext();
 
-                await getUser(req, res, next);
+                await getUser(req, res,);
 
                 sinon.assert.calledWith(res.status, 404);
                 sinon.assert.calledOnce(res.json);
