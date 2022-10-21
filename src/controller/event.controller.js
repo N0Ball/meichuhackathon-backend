@@ -45,3 +45,21 @@ exports.getEventsByUids = async (req, res) => {
         detail: res.result
     });
 }
+
+exports.getEventByid = async(req, res) => {
+
+    const id = req.params.id;
+
+    const event = await EventCRUD.getEventById(id);
+
+    if (event === null){
+        return res.status(404).json({
+            detail: "Event not found"
+        });
+    }
+
+    return res.status(200).json({
+        detail: _eventInfoField(event)
+    });
+
+}
