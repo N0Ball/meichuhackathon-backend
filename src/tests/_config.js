@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const sinon = require('sinon');
-const chai = require('chai');
 
 const connectDB = require('../db/connection');
 const UserDB = require("../model/user.model");

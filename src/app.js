@@ -32,6 +32,7 @@ app.use(cors(corsOption));
 // Routings
 app.use("/api/v1/health", require("./routes/health.route"));
 app.use("/api/v1/user", require("./routes/user.route"));
+app.use("/api/v1/department", require("./routes/department.route"));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
