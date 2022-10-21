@@ -1,13 +1,13 @@
 const chai = require('chai');
-const connectDB = require('../db/connection');
 const mongoose = require('mongoose');
+const sinon = require('sinon');
 const expect = chai.expect;
 
 const {
-    getUserByUid,
-    getUserByRFID,
+    getUser
 } = require("../controller/user.controller");
 
+const connectDB = require('../db/connection');
 const UserDB = require("../model/user.model");
 const DepartmentDB = require("../model/department.model");
 const departmentRelationsDB = require("../model/departmentRelation.model");
@@ -19,6 +19,21 @@ const {
 } = require("./dummy");
 
 describe('Test /user', () => {
+
+    const mockRequest = (data) => {
+        return data
+    }
+    const mockResponse = () => {
+        const res = {};
+        res.result = sinon.stub().returns(res);
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns(res);
+        return res;
+    }
+    const mockNext = () => {
+        const next = sinon.stub();
+        return next;
+    }
 
     before( async () => {
         await connectDB();
@@ -38,14 +53,41 @@ describe('Test /user', () => {
 
         users.forEach( (user) => {
             it(`should return a valid user with uid ${user.uid}`, async () => {
-                const result = await getUserByUid(user.uid);
-                expect(result.uid).to.equal(user.uid);
+
+                const req = mockRequest({
+                    params: {
+                        uid: user.uid
+                    }
+                });
+                const res = mockResponse();
+                const next = mockNext();
+
+                await getUser(req, res, next);
+
+                sinon.assert.calledOnce(next);
+
+                expect(res.result).includes({uid: user.uid});
+
             });
         })
 
         it('should return null if no user found', async () => {
-            const result = await getUserByUid('C0DEDEAD');
-            expect(result).to.equal(null);
+
+                const req = mockRequest({
+                    params: {
+                        uid: "FAKE_USER_UID"
+                    }
+                });
+                const res = mockResponse();
+                const next = mockNext();
+
+                await getUser(req, res, next);
+
+                sinon.assert.calledWith(res.status, 404);
+                sinon.assert.calledOnce(res.json);
+                sinon.assert.calledWith(res.json, {
+                    detail: "User not found"
+                });
         })
 
     });
@@ -54,14 +96,41 @@ describe('Test /user', () => {
 
         users.forEach( (user) => {
             it(`should return a valid user with rfid ${user.RFID_id}`, async () => {
-                const result = await getUserByRFID(user.RFID_id);
-                expect(result.uid).to.equal(user.uid);
+
+                const req = mockRequest({
+                    params: {
+                        rfid: user.RFID_id
+                    }
+                });
+                const res = mockResponse();
+                const next = mockNext();
+
+                await getUser(req, res, next);
+
+                sinon.assert.calledOnce(next);
+
+                expect(res.result).includes({uid: user.uid});
+
             });
         })
 
         it('should return null if no user found', async () => {
-            const result = await getUserByRFID('F4K3_RF1D');
-            expect(result).to.equal(null);
+
+                const req = mockRequest({
+                    params: {
+                        rfid: "FAKE_USER_RFID"
+                    }
+                });
+                const res = mockResponse();
+                const next = mockNext();
+
+                await getUser(req, res, next);
+
+                sinon.assert.calledWith(res.status, 404);
+                sinon.assert.calledOnce(res.json);
+                sinon.assert.calledWith(res.json, {
+                    detail: "User not found"
+                });
         })
 
     });
