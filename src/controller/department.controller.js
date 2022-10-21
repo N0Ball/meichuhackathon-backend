@@ -60,7 +60,7 @@ exports.getDepartment = async (req, res) => {
 
         user = UserInfoField(user);
         
-        if (relation.role == 'head'){
+        if (relation.role === 'admin'){
             res.result.admins.push(user);
             continue;
         }

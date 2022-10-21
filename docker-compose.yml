@@ -42,8 +42,6 @@ services:
   mongo:
     image: mongo
     restart: always
-    volumes:
-      - ./mongodb-data:/data/db
 
   test-mongo:
     image: mongo

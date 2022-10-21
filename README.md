@@ -27,8 +27,10 @@ MONGO_HOST=mongo # Mongo Host URL/IP
 MONGO_PORT=27017 # Mongo Port
 MONGO_DB=user-management # Mongo DB
 CLIENT=localhost # For CORS Policy
-ENV=DEV # .env should be PROD and .env.test should be TEST
+ENV=DEV # .env should be PROD/DEV and .env.test should be TEST
 ```
+
+*NOTE a default DB will be initialized in DEV environment
 
 ## test the build
 

@@ -19,6 +19,13 @@ exports.users = [
         email: "luo0329@tsmc.gmail.com",
         RFID_id: "DADAFACE",
         status:1,
+    },
+    {
+        uid: "E096096",
+        name: "Gia Ming",
+        email: "ming0324@tsmc.gmail.com",
+        RFID_id: "0U0U0U",
+        status:1,
     }
 ];
 
@@ -41,16 +48,21 @@ exports.departmentRelations = [
     {
         uid: "E010101",
         did: "D01",
-        role: "head"
+        role: "admin"
     },
     {
         uid: "E2593829",
         did: "D01",
-        role: "normal"
+        role: "employee"
+    },
+    {
+        uid: "E2593829",
+        did: "D01",
+        role: "employee"
     },
     {
         uid: "E285392",
         did: "D02",
-        role: "normal"
+        role: "employee"
     }
 ]
