@@ -13,7 +13,7 @@ const eventSchema = new mongoose.Schema({
     },
     time: {
         // FORMAT: ISO 8601
-        type: String,
+        type: Date,
         required: true
     },
     url: String, // proof of the picture

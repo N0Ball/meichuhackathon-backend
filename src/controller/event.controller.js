@@ -62,6 +62,24 @@ exports.getEventsByUids = async (req, res) => {
     });
 }
 
+exports.getEventByTime = async(req, res) => {
+    
+    const start = req.query.start || new Date().toISOString();
+    const end = req.query.end || new Date(new Date() + 60*60*1000).toISOString();
+
+    const events = await EventCRUD.getEventByTime(start, end);
+
+    res.result = [];
+    for (const event of events){
+        res.result.push(this.eventInfoField(event));
+    }
+
+    return res.status(200).json({
+        detail: res.result
+    });
+
+}
+
 exports.getEventByid = async(req, res) => {
 
     const id = req.params.id;
