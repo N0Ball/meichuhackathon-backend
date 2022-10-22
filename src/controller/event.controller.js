@@ -74,7 +74,7 @@ exports.createEvent = async(req, res) => {
 
     const event = await EventCRUD.createEvent({...req.body, url: 'https://img.dummy.com'});
     
-    return res.status(200).json({
+    return res.status(201).json({
         detail: _eventInfoField(event)
     });
 
