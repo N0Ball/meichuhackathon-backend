@@ -1,5 +1,9 @@
 const EventDB = require("../model/event.model");
 
+exports.getAllEvent = async(skip, limit) => {
+    return await EventDB.find().sort('time').skip(skip).limit(limit).exec();
+}
+
 exports.getEventById = async(id) => {
     return await EventDB.findById(id).exec();
 }

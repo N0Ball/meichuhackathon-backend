@@ -19,6 +19,22 @@ exports.eventInfoField = event => {
     }
 }
 
+exports.getAllEvents = async(req, res) => {
+    
+    const events = await EventCRUD.getAllEvent(req.query.skip || 0, req.query.limit || 10);
+
+    res.result = [];
+
+    for(const event of events){
+        res.result.push(this.eventInfoField(event));
+    }
+
+    return res.status(200).json({
+        detail: res.result
+    });
+
+}
+
 exports.getEventsByUids = async (req, res) => {
 
     let uids = ''
